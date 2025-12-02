@@ -115,4 +115,5 @@ class Model:
 
         return raggiungibili_ric
 
+
         # TODO
