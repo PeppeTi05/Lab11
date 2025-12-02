@@ -1,5 +1,6 @@
 import flet as ft
 from UI.view import View
+from database.DB_connect import DBConnect
 from model.model import Model
 
 
@@ -8,9 +9,13 @@ class Controller:
         self._view = view
         self._model = model
         self._current_rifugio = None
+        self._connessionedb = DBConnect.get_connection()
 
     def handle_calcola(self, e):
         """Callback per il bottone 'Calcola sentieri'."""
+        if self._connessionedb is None:
+            self._view.show_alert('Impossibile connettersi al DB.')
+            return
         year = self._view.txt_anno.value
         try:
             year_n = int(year)
