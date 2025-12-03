@@ -16,16 +16,16 @@ class DAO:
         cursor = conn.cursor(dictionary=True)
 
         query = """
-            SELECT DISTINCT r.id, r.nome
+            SELECT DISTINCT r.id, r.nome, r.localita
             FROM rifugio r, connessione c
             WHERE c.anno <= %s 
               AND (r.id = c.id_rifugio1 OR r.id = c.id_rifugio2)
-            GROUP BY r.nome
+            GROUP BY r.nome ASC
         """
 
         cursor.execute(query, (anno,))
         for row in cursor:
-            result.append(Rifugio(row['id'], row['nome']))
+            result.append(Rifugio(row['id'], row['nome'], row['localita']))
 
         cursor.close()
         conn.close()

@@ -38,10 +38,18 @@ class Controller:
             ft.Text(f"Il grafo ha {num_cc} componenti connesse."))
         self._view.lista_visualizzazione.controls.append(ft.Text("Di seguito il dettaglio sui nodi:"))
 
-        for n in self._model.get_nodes():
-            # n è un oggetto rifugio; usiamo .nome come rappresentazione
+        # ottengo la lista dei nodi
+        nodi = self._model.get_nodes()
+
+        # ORDINO i nodi per ID
+        nodi_ordinati = sorted(nodi, key=lambda r: r.id)
+
+        # stampo i nodi ordinati
+        for n in nodi_ordinati:
             grado = self._model.get_num_neighbors(n)
-            self._view.lista_visualizzazione.controls.append(ft.Text(f"{n} -- {grado} vicini."))
+            self._view.lista_visualizzazione.controls.append(
+                ft.Text(f"{n} -- {grado} vicini.")
+            )
 
         # abilita dropdown e bottone raggiungibili (se erano disabilitati)
         self._view.dd_rifugio.disabled = False
